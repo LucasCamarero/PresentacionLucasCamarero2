@@ -1,6 +1,9 @@
 package com.lucascamarero.presentacionlucascamarero2
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -17,13 +20,27 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,6 +63,109 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
+@Preview
+// Se opta voluntariamente a utilizar una API experimental que pertenece a Material 3
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun app() {
+
+    // Scaffold modela la vista
+    Scaffold(
+        // barra superior
+        topBar = {
+            TopAppBar(
+                colors = topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary,
+                ),
+                title = {
+                    // Text introduce un texto en pantalla
+                    Text("Presentación Lucas Camarero II")
+                }
+            )
+        },
+        // barra inferior
+        bottomBar = {
+            BottomAppBar(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.primary,
+            ) {
+                ponerBotones()
+            }
+        }
+    )
+    // lo que va dentro del "body"??
+    { innerPadding ->
+        Column(
+            modifier = Modifier.padding(innerPadding),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            //Mensaje(pulsado)
+        }
+    }
+}
+
+@Composable
+fun ponerBotones() {
+    val context = LocalContext.current
+
+    Row (
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ){
+
+        // Botón 1: Enviar e-mail
+        Button(onClick = {
+            val recipient = "l.camareroperez@ikasle.eus"
+            val subject = "Prueba desde jet compose"
+            val body = "Hola Lucas del futuro. Esto es una prueba"
+            val uri = Uri.parse(
+                "mailto:$recipient"
+                        + "?subject=${Uri.encode(subject)}"
+                        + "&body=${Uri.encode(body)}"
+            )
+
+            val intent = Intent(Intent.ACTION_SENDTO).apply { data = uri }
+            context.startActivity(intent)
+        }) {
+            Icon(Icons.Default.Email, contentDescription = "Email")
+        }
+
+        // Botón 2: Compartir contenido
+        Button(onClick = {
+            val intent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, "Mira esta app de Compose genial!")
+            }
+            context.startActivity(Intent.createChooser(intent, "Compartir con"))
+        }) {
+            Icon(Icons.Default.Share, contentDescription = "Compartir")
+        }
+
+        // Botón 3: Abrir navegador
+        Button(onClick = {
+            val url = "https://www.google.com"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            context.startActivity(intent)
+        }) {
+            Icon(Icons.Default.Info, contentDescription = "Navegador")
+        }
+
+        // Botón 4: Abrir otra actividad
+        Button(onClick = {
+            val intent = Intent(context, OtraActividad::class.java)
+            context.startActivity(intent)
+        }) {
+            Icon(Icons.Default.Home, contentDescription = "Otra actividad")
+        }
+    }
+}
+
+/*
 @Preview
 @Composable
 fun app() {
@@ -258,4 +378,4 @@ fun app() {
         }
     }
 }
-
+*/
