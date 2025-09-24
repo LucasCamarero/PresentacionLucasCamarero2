@@ -9,20 +9,22 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    //primary = Negro80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+private val LightColorScheme = lightColorScheme(
+    primary = GrisPrimario,
+    primaryContainer = GrisPrimario,
+    onPrimary = Color.White,
+    secondary = TurquesaClaro,
 )
 
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    //primary = Negro80,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+private val DarkColorScheme = darkColorScheme(
+    primary = GrisPrimario,
+    primaryContainer = GrisPrimario,
+    onPrimary = Color.White,
+    secondary = TurquesaClaro,
+)
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -31,14 +33,11 @@ private val LightColorScheme = lightColorScheme(
     onSecondary = Color.White,
     onTertiary = Color.White,
     onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
-)
+    onSurface = Color(0xFF1C1B1F),*/
 
 @Composable
 fun PresentacionLucasCamarero2Theme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
