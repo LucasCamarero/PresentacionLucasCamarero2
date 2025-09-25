@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             PresentacionLucasCamarero2Theme(dynamicColor = false) {
                 Surface {
-                    app()
+                    App()
                 }
             }
         }
@@ -63,9 +63,20 @@ class MainActivity : ComponentActivity() {
 }
 
 @Preview
+@Composable
+fun AppPreview(){
+    PresentacionLucasCamarero2Theme(dynamicColor = false) {
+        Surface (
+        ) {
+            App()
+        }
+    }
+}
+
+//@Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun app() {
+fun App() {
     Scaffold(
 
         // barra superior
@@ -87,7 +98,7 @@ fun app() {
             BottomAppBar(
                 containerColor = MaterialTheme.colorScheme.secondary,
             ) {
-                ponerBotones()
+                PonerBotones()
             }
         }
     )
@@ -100,13 +111,13 @@ fun app() {
                 .background(MaterialTheme.colorScheme.primary),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            mensaje()
+            Mensaje()
         }
     }
 }
 
 @Composable
-fun ponerBotones() {
+fun PonerBotones() {
     val context = LocalContext.current
     Row (
         modifier = Modifier
@@ -159,7 +170,7 @@ fun ponerBotones() {
 }
 
 @Composable
-fun mensaje() {
+fun Mensaje() {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
